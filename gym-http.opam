@@ -1,0 +1,29 @@
+opam-version: "1.2"
+name: "gym-http"
+version: "0.01-dev"
+maintainer: [
+  "Louis Mandel <lmandel@us.ibm.com>"
+]
+authors: [
+  "Louis Mandel"
+]
+homepage: "https://github.ibm.com/probla/gym-http"
+bug-reports: "https://github.ibm.com/probla/gym-http/issues"
+license: "Apache License 2.0"
+dev-repo: "https://github.ibm.com/probla/gym-http.git"
+
+build: [
+  ["jbuilder" "subst" "-p" name "--name" name] {pinned}
+  ["jbuilder" "build" "-p" name "-j" jobs]
+]
+
+depends: [
+  "dune" {build}
+  "ocaml-migrate-parsetree" {build}
+  "atdgen" {build}
+  "atd"
+  "cohttp-lwt-unix" {>= "1.0.0"}
+]
+available: [
+  ocaml-version >= "4.03.0"
+]
