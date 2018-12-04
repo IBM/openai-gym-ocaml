@@ -1,0 +1,17 @@
+# Build: docker build -t rl_gym_agent_001 -f Dockerfile.agent .
+# Run: docker run -it --link rl_server rl_gym_agent_001 bash
+
+FROM ubuntu:16.04
+
+COPY gym_http_client.py /client/gym_http_client.py
+COPY new_agent.py /client/new_agent.py
+
+WORKDIR /client
+
+RUN apt-get update && apt-get install -y \
+    python3-pip \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN pip3 install gym
+
+CMD python3 ./new_agent.py
