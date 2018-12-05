@@ -19,8 +19,7 @@
 (executables
  ((names (test01))
   (libraries (gym-http))
-  (link_flags (-linkall))
-  (modes     (byte))))
+  (link_flags (-linkall))))
 
 (alias
  ((name   runtest)

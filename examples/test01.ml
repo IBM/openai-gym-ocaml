@@ -1,21 +1,18 @@
-let () =
+open Gym_http
+open Gym_t
+
+let instance_id =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_create@.";
-  let instance_id = Gym_http.env_create "CartPole-v0" in
-  begin match instance_id with
-  | Some instance_id -> Format.printf "%s@." instance_id
-  | None -> Format.printf "%s@."  "Error: env_create"
-  end
+  let instance_id = Gym_client.env_create "CartPole-v0" in
+  Format.printf "%s@." instance_id.instance_id;
+  instance_id
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_list_all@.";
-  let envs = Gym_http.env_list_all () in
-  begin match envs with
-  | Some envs ->
-      List.iter
-        (fun (instance_id, env_id) ->
-           Format.printf "  %s: %s@." instance_id env_id)
-        envs
-  | None -> Format.printf "%s@."  "Error: env_create"
-  end
+  let envs = Gym_client.env_list_all () in
+  List.iter
+    (fun (instance_id, env_id) ->
+       Format.printf "  %s: %s@." instance_id env_id)
+    envs

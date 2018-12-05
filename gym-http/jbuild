@@ -22,13 +22,13 @@
   (synopsis "Gym API Library")
   (libraries (atdgen cohttp-lwt-unix))))
 
-;; (rule
-;;  ((targets (gym_j.ml gym_j.mli))
-;;   (deps    (gym.atd))
-;;   (action  (run atdgen -j -j-std ${<}))))
+(rule
+ ((targets (gym_j.ml gym_j.mli))
+  (deps    (gym.atd))
+  (action  (run atdgen -j -j-std ${<}))))
 
-;; (rule
-;;  ((targets (gym_t.ml gym_t.mli))
-;;   (deps    (gym.atd))
-;;   (action  (run atdgen -t ${<}))))
+(rule
+ ((targets (gym_t.ml gym_t.mli))
+  (deps    (gym.atd))
+  (action  (run atdgen -t ${<}))))
 

@@ -16,27 +16,19 @@
  * limitations under the License.
  *)
 
-let base_url = ref "http://rl_server:5000"
+open Gym_t
+open Gym_j
+
+let base_url = ref "http://127.0.0.1:5000"
 
 let env_create env_id =
   let method_ = "/v1/envs/" in
-  let req = Yojson.Basic.to_string (`Assoc [ "env_id", `String env_id ]) in
+  let req = string_of_env_id { env_id = env_id; } in
   let rsp = Rest.post !base_url method_ req in
-  Json.get_string (Yojson.Basic.from_string rsp) "instance_id"
+  instance_id_of_string rsp
 
 let env_list_all () =
   let method_ = "/v1/envs/" in
-  let params = Rest.parameters_of_json `Null in
+  let params = Rest.parameters_of_json (`Assoc []) in
   let rsp = Rest.get !base_url method_ params in
-  begin match Json.get (Yojson.Basic.from_string rsp) "all_envs" with
-  | Some (`Assoc l) ->
-      Some
-        (List.map
-           (fun (instance_id, env_id) ->
-              begin match env_id with
-              | `String env_id -> (instance_id, env_id)
-              | _ -> Format.eprintf "XXXXXXXXX %s@." rsp; assert false
-              end)
-           l)
-  | _ -> None
-  end
+  (all_envs_of_string rsp).all_envs
