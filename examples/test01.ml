@@ -1,5 +1,6 @@
 open Gym_http
 open Gym_t
+open Gym_j
 
 let instance_id =
   Format.printf "-------------------------------@.";
@@ -16,3 +17,15 @@ let () =
     (fun (instance_id, env_id) ->
        Format.printf "  %s: %s@." instance_id env_id)
     envs
+
+let () =
+  Format.printf "-------------------------------@.";
+  Format.printf "Test env_reset@.";
+  let obs = Gym_client.env_reset instance_id.instance_id in
+  Format.printf "observation = %s" (string_of_json obs.observation)
+
+let () =
+  Format.printf "-------------------------------@.";
+  Format.printf "Test env_step@.";
+  let resp = Gym_client.env_step instance_id.instance_id 0 false in
+  Format.printf "resp = %s" (string_of_step_response resp)

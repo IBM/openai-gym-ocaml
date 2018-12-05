@@ -29,12 +29,28 @@ type instance_id = {
   instance_id : string;
 }
 
-
 type envs = (string * string) list <json repr="object">
 
 type all_envs = {
   all_envs : envs;
 }
+
+type observation = {
+  observation : json;
+}
+
+type step_param = {
+  ~render <ocaml default="false"> : bool;
+  action : json;
+} <ocaml field_prefix="step_">
+
+
+type step_response = {
+  observation : json;
+  reward : float;
+  done : json;
+  info : json;
+} <ocaml field_prefix="step_">
 
 (* (\** {6 Credentials} *\) *)
 

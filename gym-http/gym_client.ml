@@ -29,6 +29,21 @@ let env_create env_id =
 
 let env_list_all () =
   let method_ = "/v1/envs/" in
-  let params = Rest.parameters_of_json (`Assoc []) in
+  let params = "" in
   let rsp = Rest.get !base_url method_ params in
   (all_envs_of_string rsp).all_envs
+
+let env_reset instance_id =
+  let method_ = "/v1/envs/"^instance_id^"/reset/" in
+  let req = "" in
+  let rsp = Rest.post !base_url method_ req in
+  observation_of_string rsp
+
+let env_step instance_id action render =
+  let method_ = "/v1/envs/"^instance_id^"/step/" in
+  let req =
+    string_of_step_param { step_render = render;
+                           step_action = `Int action; }
+  in
+  let rsp = Rest.post !base_url method_ req in
+  step_response_of_string rsp
