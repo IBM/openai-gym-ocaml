@@ -22,10 +22,28 @@ let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_reset@.";
   let obs = Gym_client.env_reset instance_id.instance_id in
-  Format.printf "observation = %s" (string_of_json obs.observation)
+  Format.printf "observation = %s@." (string_of_json obs.observation)
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_step@.";
   let resp = Gym_client.env_step instance_id.instance_id 0 false in
-  Format.printf "resp = %s" (string_of_step_response resp)
+  Format.printf "resp = %s@." (string_of_step_response resp)
+
+let () =
+  Format.printf "-------------------------------@.";
+  Format.printf "Test env_action_space_info@.";
+  let resp = Gym_client.env_action_space_info instance_id.instance_id in
+  Format.printf "resp = %s@." (string_of_json resp)
+
+let () =
+  Format.printf "-------------------------------@.";
+  Format.printf "Test env_action_space_sample@.";
+  let resp = Gym_client.env_action_space_sample instance_id.instance_id in
+  Format.printf "action = %s@." (string_of_json resp)
+
+let () =
+  Format.printf "-------------------------------@.";
+  Format.printf "Test env_action_space_contains@.";
+  let resp = Gym_client.env_action_space_contains instance_id.instance_id 0 in
+  Format.printf "member = %s@." (string_of_bool resp)

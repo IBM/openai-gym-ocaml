@@ -47,3 +47,24 @@ let env_step instance_id action render =
   in
   let rsp = Rest.post !base_url method_ req in
   step_response_of_string rsp
+
+let env_action_space_info instance_id =
+  let method_ = "/v1/envs/"^instance_id^"/action_space/" in
+  let params = "" in
+  let rsp = Rest.get !base_url method_ params in
+  (action_space_response_of_string rsp).action_space_info
+
+let env_action_space_sample instance_id =
+  let method_ = "/v1/envs/"^instance_id^"/action_space/sample" in
+  let params = "" in
+  let rsp = Rest.get !base_url method_ params in
+  (action_space_sample_response_of_string rsp).action_space_sample_action
+
+let env_action_space_contains instance_id x =
+  let method_ =
+    "/v1/envs/"^instance_id^"/action_space/contains/"^(string_of_int x)
+  in
+  let params = "" in
+  let rsp = Rest.get !base_url method_ params in
+  (action_space_contains_response_of_string rsp).action_space_contains_member
+
