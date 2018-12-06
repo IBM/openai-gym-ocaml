@@ -13,8 +13,8 @@ license: "Apache License 2.0"
 dev-repo: "https://github.ibm.com/probla/gym-http.git"
 
 build: [
-  ["jbuilder" "subst" "-p" name "--name" name] {pinned}
-  ["jbuilder" "build" "-p" name "-j" jobs]
+  ["dune" "subst"] {pinned}
+  ["dune" "build" "-p" name "-j" jobs]
 ]
 
 depends: [

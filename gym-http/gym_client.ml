@@ -16,7 +16,6 @@
  * limitations under the License.
  *)
 
-open Gym_t
 open Gym_j
 
 let base_url = ref "http://127.0.0.1:5000"

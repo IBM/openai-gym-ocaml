@@ -105,7 +105,7 @@ let push (ctx: json) (lbl: string) (v: json) : json =
       set ctx lbl (`List [ v ])
   | ctx, Some (`List l) ->
       set ctx lbl (`List (l @ [ v ]))
-  | ctc, Some _ ->
+  | ctx, Some _ ->
       Log.error "Json"
         (Some ctx)
         "Unable to push an element in a non-list property"

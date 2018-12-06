@@ -1,6 +1,6 @@
 open Gym_http
-open Gym_t
 open Gym_j
+open Gym_t
 
 let instance_id =
   Format.printf "-------------------------------@.";

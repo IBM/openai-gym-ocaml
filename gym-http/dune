@@ -14,14 +14,19 @@
 ;; See the License for the specific language governing permissions and
 ;; limitations under the License.
 
-(jbuild_version 1)
+(library
+ (name        gym_http)
+ (public_name gym-http)
+ (synopsis "Gym API Library")
+ (libraries atdgen cohttp-lwt-unix))
 
-(executables
- ((names (test01))
-  (libraries (gym-http))
-  (link_flags (-linkall))))
+(rule
+ (targets gym_j.ml gym_j.mli)
+ (deps    (:atd gym.atd))
+ (action  (run atdgen -j -j-std %{atd})))
 
-(alias
- ((name   runtest)
-  (deps   (test01.exe))
-  (action (run ${<}))))
+(rule
+ (targets gym_t.ml gym_t.mli)
+ (deps    (:atd gym.atd))
+ (action  (run atdgen -t %{atd})))
+

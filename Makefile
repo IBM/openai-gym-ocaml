@@ -15,18 +15,18 @@
 # limitations under the License.
 
 
-JBUILDER ?= jbuilder
+DUNE ?= dune
 
 all: build
 
 build:
-	$(JBUILDER) build @install
+	$(DUNE) build @install
 
 test:
-	$(JBUILDER) runtest
+	$(DUNE) runtest
 
 doc:
-	$(JBUILDER) build @doc
+	$(DUNE) build @doc
 
 webdoc: doc
 	cp -rf _build/default/_doc/ docs/
@@ -37,10 +37,10 @@ indent:
 	@find . \( -name '*.mli' -exec ocp-indent -i \{\} + \)
 
 install:
-	$(JBUILDER) install
+	$(DUNE) install
 
 uninstall:
-	$(JBUILDER) uninstall
+	$(DUNE) uninstall
 
 clean:
 	rm -rf _build \

@@ -26,10 +26,10 @@ module Make (Client : Cohttp_lwt.S.Client) = struct
     begin match o with
     | `Assoc [] -> ""
     | `Assoc ((x, v) :: l) ->
-        let params = "?"^x^"="^(Yojson.Basic.to_string o) in
+        let params = "?"^x^"="^(Yojson.Basic.to_string v) in
         List.fold_left
           (fun params (x, v) ->
-            "&"^x^"="^(Yojson.Basic.to_string o))
+             params^"&"^x^"="^(Yojson.Basic.to_string v))
           params l
     | _ ->
         Log.error "Rest" (Some "")
