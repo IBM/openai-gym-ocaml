@@ -58,7 +58,7 @@ module Make (Client : Cohttp_lwt.S.Client) = struct
           | 200 | 201 -> body
           | _ ->
               Log.error
-                "Wcs" None
+                "Rest" None
                 (Format.sprintf "[POST %s] %d: %s" method_ code body)
           end))
     in
@@ -83,7 +83,7 @@ module Make (Client : Cohttp_lwt.S.Client) = struct
           | 200 -> body
           | _ ->
               Log.error
-                "Wcs" None
+                "Rest" None
                 (Format.sprintf "[GET %s] %d: %s" method_ code body)
           end))
     in
@@ -109,95 +109,11 @@ module Make (Client : Cohttp_lwt.S.Client) = struct
           | 200 | 201 -> body
           | _ ->
               Log.error
-                "Wcs" None
+                "Rest" None
                 (Format.sprintf "[DELETE %s] %d: %s" method_ code body)
           end))
     in
     let rsp = Lwt_main.run call in
     rsp
-
-
-  (* (\** {Watson Conversation API} *\) *)
-
-  (* let list_workspaces wcs_cred req = *)
-  (*   let method_ = "/v1/workspaces" in *)
-  (*   let params = *)
-  (*     parameters_of_json (Wcs.json_of_list_workspaces_request req) *)
-  (*   in *)
-  (*   let rsp = get wcs_cred method_ params in *)
-  (*   Wcs_j.list_workspaces_response_of_string rsp *)
-
-
-  (* let create_workspace wcs_cred workspace = *)
-  (*   assert (ws_check workspace); *)
-  (*   let method_ = "/v1/workspaces" in *)
-  (*   let req = Wcs_j.string_of_workspace workspace in *)
-  (*   let rsp = *)
-  (*     begin try post wcs_cred method_ req *)
-  (*     with Log.Error ("Wcs", err) -> *)
-  (*       begin match workspace.ws_name with *)
-  (*       | Some ws_name -> *)
-  (*           Log.error *)
-  (*             "Wcs" None *)
-  (*             (Format.sprintf "[%s]%s" ws_name err) *)
-  (*       | None -> *)
-  (*           Log.error "Wcs" None err *)
-  (*       end *)
-  (*     end *)
-  (*   in *)
-  (*   Wcs_j.create_response_of_string rsp *)
-
-  (* let delete_workspace wcs_cred workspace_id = *)
-  (*   let method_ = "/v1/workspaces/"^workspace_id in *)
-  (*   let rsp = delete wcs_cred method_ in *)
-  (*   ignore rsp *)
-
-  (* let get_workspace wcs_cred req = *)
-  (*   let method_ = "/v1/workspaces/"^req.get_ws_req_workspace_id in *)
-  (*   let params = *)
-  (*     begin match req.get_ws_req_export with *)
-  (*     | None -> "" *)
-  (*     | Some b -> "&export="^(string_of_bool b) *)
-  (*     end *)
-  (*   in *)
-  (*   let rsp = get wcs_cred method_ params in *)
-  (*   Wcs_j.workspace_of_string rsp *)
-
-
-  (* let update_workspace wcs_cred workspace_id workspace = *)
-  (*   assert (ws_check workspace); *)
-  (*   let method_ = "/v1/workspaces/"^workspace_id in *)
-  (*   let req = Wcs_j.string_of_workspace workspace in *)
-  (*   let rsp = *)
-  (*     begin try post wcs_cred method_ req *)
-  (*     with Log.Error ("Wcs", err) -> *)
-  (*       begin match workspace.ws_name with *)
-  (*       | Some ws_name -> *)
-  (*           Log.error *)
-  (*             "Wcs" None *)
-  (*             (Format.sprintf "[%s]%s" ws_name err) *)
-  (*       | None -> *)
-  (*           Log.error "Wcs" None err *)
-  (*       end *)
-  (*     end *)
-  (*   in *)
-  (*   ignore rsp *)
-
-  (* let message wcs_cred workspace_id req_msg = *)
-  (*   let method_ = "/v1/workspaces/"^workspace_id^"/message" in *)
-  (*   let req = Wcs_j.string_of_message_request req_msg in *)
-  (*   let rsp = post wcs_cred method_ req in *)
-  (*   Wcs_j.message_response_of_string rsp *)
-
-
-  (* (\** {6 Logs} *\) *)
-
-  (* let logs wcs_cred workspace_id req = *)
-  (*   let method_ = "/v1/workspaces/"^workspace_id^"/logs" in *)
-  (*   let params = *)
-  (*     parameters_of_json (Wcs.json_of_logs_request req) *)
-  (*   in *)
-  (*   let rsp = get wcs_cred method_ params in *)
-  (*   Wcs_j.logs_response_of_string rsp *)
 
 end
