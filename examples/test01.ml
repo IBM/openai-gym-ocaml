@@ -47,3 +47,25 @@ let () =
   Format.printf "Test env_action_space_contains@.";
   let resp = Gym_client.env_action_space_contains instance_id.instance_id 0 in
   Format.printf "member = %s@." (string_of_bool resp)
+
+let () =
+  Format.printf "-------------------------------@.";
+  Format.printf "Test env_observation_space_info@.";
+  let resp = Gym_client.env_observation_space_info instance_id.instance_id in
+  Format.printf "obs_space = %s@." (string_of_json resp)
+
+let () =
+  Format.printf "-------------------------------@.";
+  Format.printf "Test env_observation_space_contains@.";
+  let resp =
+    Gym_client.env_observation_space_contains instance_id.instance_id (`Assoc[])
+  in
+  Format.printf "member = %s@." (string_of_bool resp)
+
+(* let () = *)
+(*   Format.printf "-------------------------------@."; *)
+(*   Format.printf "Test env_monitor_start@."; *)
+(*   let resp = *)
+(*     Gym_client.env_monitor_start instance_id.instance_id "/tmp" false false *)
+(*   in *)
+(*   Format.printf "monitor started: %s@." (string_of_json resp) *)

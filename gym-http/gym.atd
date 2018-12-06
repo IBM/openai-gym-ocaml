@@ -44,7 +44,6 @@ type step_param = {
   action : json;
 } <ocaml field_prefix="step_">
 
-
 type step_response = {
   observation : json;
   reward : float;
@@ -63,6 +62,22 @@ type action_space_sample_response = {
 type action_space_contains_response = {
   member : bool;
 } <ocaml field_prefix="action_space_contains_">
+
+type observation_space_response = {
+  info : json;
+} <ocaml field_prefix="observation_space_">
+
+type observation_space_contains_response = {
+  member : bool;
+} <ocaml field_prefix="observation_space_contains_">
+
+type monitor_start_param = {
+  directory : string;
+  force : bool;
+  resume : bool;
+  ~video_callable <ocaml default="false"> : bool;
+}  <ocaml field_prefix="monitor_">
+
 
 
 (* (\** {6 Credentials} *\) *)

@@ -68,3 +68,28 @@ let env_action_space_contains instance_id x =
   let rsp = Rest.get !base_url method_ params in
   (action_space_contains_response_of_string rsp).action_space_contains_member
 
+let env_observation_space_info instance_id =
+  let method_ = "/v1/envs/"^instance_id^"/observation_space/" in
+  let params = "" in
+  let rsp = Rest.get !base_url method_ params in
+  (observation_space_response_of_string rsp).observation_space_info
+
+let env_observation_space_contains instance_id params =
+  let method_ = "/v1/envs/"^instance_id^"/observation_space/contains" in
+  let req = string_of_json params in
+  let rsp = Rest.post !base_url method_ req in
+  let rsp = observation_space_contains_response_of_string rsp in
+  rsp.observation_space_contains_member
+
+let env_monitor_start instance_id directory force resume =
+  let method_ = "/v1/envs/"^instance_id^"/monitor/start/" in
+  let req =
+    string_of_monitor_start_param
+      { monitor_directory = directory;
+        monitor_force = force;
+        monitor_resume = resume;
+        monitor_video_callable = false; }
+  in
+  let rsp = Rest.post !base_url method_ req in
+  json_of_string rsp
+
