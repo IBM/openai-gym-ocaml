@@ -1,0 +1,9 @@
+type instance_id
+type envs
+type response
+type observation
+
+val env_create: string -> instance_id
+val env_list_all: unit -> envs
+val env_reset: string -> observation
+val env_step: string * int * bool -> response

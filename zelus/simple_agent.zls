@@ -1,0 +1,12 @@
+open Gym_http
+open Gym_client
+
+let instance_id = Gym_client.env_create "CartPole-v0"
+
+let node controller () = action where
+    rec action = 1 (* Gym_client.env_action_space_sample(instance_id) *)
+
+let node main () =
+   let action = controller () in
+   let resp = Gym_client.env_step("CartPole-v0", action, true) in
+   ()
