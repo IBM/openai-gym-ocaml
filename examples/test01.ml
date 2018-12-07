@@ -76,7 +76,6 @@ let () =
   let () = Gym_client.env_monitor_close instance_id.instance_id in
   Format.printf "monitor closed@."
 
-
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_close@.";
@@ -91,3 +90,9 @@ let () =
     (fun (instance_id, env_id) ->
        Format.printf "  %s: %s@." instance_id env_id)
     envs
+
+(* let () = *)
+(*   Format.printf "-------------------------------@."; *)
+(*   Format.printf "Test shutdown@."; *)
+(*   let resp = Gym_client.shutdown_server () in *)
+(*   Format.printf "server shutdowned: %s@." resp *)

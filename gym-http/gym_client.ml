@@ -106,3 +106,9 @@ let env_close instance_id =
   let _rsp = Rest.post !base_url method_ req in
   assert (_rsp = "");
   ()
+
+let shutdown_server () =
+  let method_ = "/v1/shutdown/" in
+  let req = "" in
+  let rsp = Rest.post !base_url method_ req in
+  rsp
