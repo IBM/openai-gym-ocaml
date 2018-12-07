@@ -17,71 +17,111 @@
  *)
 
 open Gym_j
+open Gym_t
+open Json_t
 
+(** Server url: default is [http://127.0.0.1:5000] *)
 let base_url = ref "http://127.0.0.1:5000"
 
-let env_create env_id =
-  let method_ = "/v1/envs/" in
-  let req = string_of_env_id { env_id = env_id; } in
-  let rsp = Rest.post !base_url method_ req in
-  instance_id_of_string rsp
+(** [env_create env_id] creates an instance of the specified
+    environment (e.g., ["CartPole-v0"]). It returns the instance
+    identifier.
+*)
+let env_create : string -> instance_id = begin
+  fun env_id ->
+    let method_ = "/v1/envs/" in
+    let req = string_of_env_id { env_id = env_id; } in
+    let rsp = Rest.post !base_url method_ req in
+    instance_id_of_string rsp
+end
 
-let env_list_all () =
-  let method_ = "/v1/envs/" in
-  let params = "" in
-  let rsp = Rest.get !base_url method_ params in
-  (all_envs_of_string rsp).all_envs
+(** [env_list_all ()] lists all the environments running on the server
+    as a pair [(instance_id, env_id)] (e.g. [[("3c657dbc", "CartPole-v0")]]).
+*)
+let env_list_all : unit -> (string * string) list = begin
+  fun () ->
+    let method_ = "/v1/envs/" in
+    let params = "" in
+    let rsp = Rest.get !base_url method_ params in
+    (all_envs_of_string rsp).all_envs
+end
 
-let env_reset instance_id =
-  let method_ = "/v1/envs/"^instance_id^"/reset/" in
-  let req = "" in
-  let rsp = Rest.post !base_url method_ req in
-  observation_of_string rsp
+(** [env_reset instance_id] resets the state of the environment and
+    return an initial observation.
+*)
+let env_reset : instance_id -> json = begin
+  fun instance_id ->
+    let method_ = "/v1/envs/"^instance_id.instance_id^"/reset/" in
+    let req = "" in
+    let rsp = Rest.post !base_url method_ req in
+    (observation_of_string rsp).observation
+end
 
-let env_step instance_id action render =
-  let method_ = "/v1/envs/"^instance_id^"/step/" in
-  let req =
-    string_of_step_param { step_render = render;
-                           step_action = `Int action; }
-  in
-  let rsp = Rest.post !base_url method_ req in
-  step_response_of_string rsp
+(** [env_step instance_id action render] steps though an environment
+    using an action. If [render] is true, a graphical feedback if
+    display by the server.
+*)
+let env_step : instance_id -> int -> bool -> step_response = begin
+  fun instance_id action render ->
+    let method_ = "/v1/envs/"^instance_id.instance_id^"/step/" in
+    let req =
+      string_of_step_param { step_render = render;
+                             step_action = `Int action; }
+    in
+    let rsp = Rest.post !base_url method_ req in
+    step_response_of_string rsp
+end
 
-let env_action_space_info instance_id =
-  let method_ = "/v1/envs/"^instance_id^"/action_space/" in
-  let params = "" in
-  let rsp = Rest.get !base_url method_ params in
-  (action_space_response_of_string rsp).action_space_info
+(** [env_action_space_info instance_id] gets information (name and
+    dimensions/bounds) of the env's action_space.
+*)
+let env_action_space_info : instance_id -> json = begin
+  fun instance_id  ->
+    let method_ = "/v1/envs/"^instance_id.instance_id^"/action_space/" in
+    let params = "" in
+    let rsp = Rest.get !base_url method_ params in
+    (action_space_response_of_string rsp).action_space_info
+end
 
-let env_action_space_sample instance_id =
-  let method_ = "/v1/envs/"^instance_id^"/action_space/sample" in
-  let params = "" in
-  let rsp = Rest.get !base_url method_ params in
-  (action_space_sample_response_of_string rsp).action_space_sample_action
+(** [env_action_space_sample instance_id] samples randomly from the
+    env's action_space.
+*)
+let env_action_space_sample : instance_id -> json = begin
+  fun instance_id ->
+    let method_ = "/v1/envs/"^instance_id.instance_id^"/action_space/sample" in
+    let params = "" in
+    let rsp = Rest.get !base_url method_ params in
+    (action_space_sample_response_of_string rsp).action_space_sample_action
+end
 
-let env_action_space_contains instance_id x =
-  let method_ =
-    "/v1/envs/"^instance_id^"/action_space/contains/"^(string_of_int x)
-  in
-  let params = "" in
-  let rsp = Rest.get !base_url method_ params in
-  (action_space_contains_response_of_string rsp).action_space_contains_member
+(** [env_action_space_contains instance_id x] checks to see if the
+    value [x] is valid in the env's action_space.
+*)
+let env_action_space_contains : instance_id -> int -> bool = begin
+  fun instance_id x ->
+    let method_ =
+      "/v1/envs/"^instance_id.instance_id^"/action_space/contains/"^(string_of_int x)
+    in
+    let params = "" in
+    let rsp = Rest.get !base_url method_ params in
+    (action_space_contains_response_of_string rsp).action_space_contains_member
+end
 
 let env_observation_space_info instance_id =
-  let method_ = "/v1/envs/"^instance_id^"/observation_space/" in
+  let method_ = "/v1/envs/"^instance_id.instance_id^"/observation_space/" in
   let params = "" in
   let rsp = Rest.get !base_url method_ params in
   (observation_space_response_of_string rsp).observation_space_info
 
 let env_observation_space_contains instance_id params =
-  let method_ = "/v1/envs/"^instance_id^"/observation_space/contains" in
+  let method_ = "/v1/envs/"^instance_id.instance_id^"/observation_space/contains" in
   let req = string_of_json params in
   let rsp = Rest.post !base_url method_ req in
   let rsp = observation_space_contains_response_of_string rsp in
   rsp.observation_space_contains_member
 
 let env_monitor_start instance_id directory force resume =
-  let method_ = "/v1/envs/"^instance_id^"/monitor/start/" in
+  let method_ = "/v1/envs/"^instance_id.instance_id^"/monitor/start/" in
   let req =
     string_of_monitor_start_param
       { monitor_directory = directory;
@@ -94,14 +134,14 @@ let env_monitor_start instance_id directory force resume =
   ()
 
 let env_monitor_close instance_id =
-  let method_ = "/v1/envs/"^instance_id^"/monitor/close/" in
+  let method_ = "/v1/envs/"^instance_id.instance_id^"/monitor/close/" in
   let req = "" in
   let _rsp = Rest.post !base_url method_ req in
   assert (_rsp = "");
   ()
 
 let env_close instance_id =
-  let method_ = "/v1/envs/"^instance_id^"/close/" in
+  let method_ = "/v1/envs/"^instance_id.instance_id^"/close/" in
   let req = "" in
   let _rsp = Rest.post !base_url method_ req in
   assert (_rsp = "");

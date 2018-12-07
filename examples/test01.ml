@@ -21,44 +21,44 @@ let () =
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_reset@.";
-  let obs = Gym_client.env_reset instance_id.instance_id in
-  Format.printf "observation = %s@." (string_of_json obs.observation)
+  let obs = Gym_client.env_reset instance_id in
+  Format.printf "observation = %s@." (string_of_json obs)
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_step@.";
-  let resp = Gym_client.env_step instance_id.instance_id 0 false in
+  let resp = Gym_client.env_step instance_id 0 false in
   Format.printf "resp = %s@." (string_of_step_response resp)
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_action_space_info@.";
-  let resp = Gym_client.env_action_space_info instance_id.instance_id in
+  let resp = Gym_client.env_action_space_info instance_id in
   Format.printf "resp = %s@." (string_of_json resp)
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_action_space_sample@.";
-  let resp = Gym_client.env_action_space_sample instance_id.instance_id in
+  let resp = Gym_client.env_action_space_sample instance_id in
   Format.printf "action = %s@." (string_of_json resp)
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_action_space_contains@.";
-  let resp = Gym_client.env_action_space_contains instance_id.instance_id 0 in
+  let resp = Gym_client.env_action_space_contains instance_id 0 in
   Format.printf "member = %s@." (string_of_bool resp)
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_observation_space_info@.";
-  let resp = Gym_client.env_observation_space_info instance_id.instance_id in
+  let resp = Gym_client.env_observation_space_info instance_id in
   Format.printf "obs_space = %s@." (string_of_json resp)
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_observation_space_contains@.";
   let resp =
-    Gym_client.env_observation_space_contains instance_id.instance_id (`Assoc[])
+    Gym_client.env_observation_space_contains instance_id (`Assoc[])
   in
   Format.printf "member = %s@." (string_of_bool resp)
 
@@ -66,20 +66,20 @@ let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_monitor_start@.";
   let () =
-    Gym_client.env_monitor_start instance_id.instance_id "/tmp" true false
+    Gym_client.env_monitor_start instance_id "/tmp" true false
   in
   Format.printf "monitor started@."
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_monitor_close@.";
-  let () = Gym_client.env_monitor_close instance_id.instance_id in
+  let () = Gym_client.env_monitor_close instance_id in
   Format.printf "monitor closed@."
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_close@.";
-  let () = Gym_client.env_close instance_id.instance_id in
+  let () = Gym_client.env_close instance_id in
   Format.printf "closed %s@." instance_id.instance_id
 
 let () =
