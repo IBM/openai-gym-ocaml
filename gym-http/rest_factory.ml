@@ -55,7 +55,7 @@ module Make (Client : Cohttp_lwt.S.Client) = struct
         let code = resp |> Cohttp.Response.status |> Cohttp.Code.code_of_status in
         body |> Cohttp_lwt.Body.to_string >|= (fun body ->
           begin match code with
-          | 200 | 201 -> body
+          | 200 | 201 | 204  -> body
           | _ ->
               Log.error
                 "Rest" None
