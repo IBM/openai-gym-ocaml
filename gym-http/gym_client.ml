@@ -89,6 +89,20 @@ let env_monitor_start instance_id directory force resume =
         monitor_resume = resume;
         monitor_video_callable = false; }
   in
-  let rsp = Rest.post !base_url method_ req in
-  json_of_string rsp
+  let _rsp = Rest.post !base_url method_ req in
+  assert (_rsp = "");
+  ()
 
+let env_monitor_close instance_id =
+  let method_ = "/v1/envs/"^instance_id^"/monitor/close/" in
+  let req = "" in
+  let _rsp = Rest.post !base_url method_ req in
+  assert (_rsp = "");
+  ()
+
+let env_close instance_id =
+  let method_ = "/v1/envs/"^instance_id^"/close/" in
+  let req = "" in
+  let _rsp = Rest.post !base_url method_ req in
+  assert (_rsp = "");
+  ()

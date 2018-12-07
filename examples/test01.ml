@@ -62,10 +62,32 @@ let () =
   in
   Format.printf "member = %s@." (string_of_bool resp)
 
-(* let () = *)
-(*   Format.printf "-------------------------------@."; *)
-(*   Format.printf "Test env_monitor_start@."; *)
-(*   let resp = *)
-(*     Gym_client.env_monitor_start instance_id.instance_id "/tmp" false false *)
-(*   in *)
-(*   Format.printf "monitor started: %s@." (string_of_json resp) *)
+let () =
+  Format.printf "-------------------------------@.";
+  Format.printf "Test env_monitor_start@.";
+  let () =
+    Gym_client.env_monitor_start instance_id.instance_id "/tmp" true false
+  in
+  Format.printf "monitor started@."
+
+let () =
+  Format.printf "-------------------------------@.";
+  Format.printf "Test env_monitor_close@.";
+  let () = Gym_client.env_monitor_close instance_id.instance_id in
+  Format.printf "monitor closed@."
+
+
+let () =
+  Format.printf "-------------------------------@.";
+  Format.printf "Test env_close@.";
+  let () = Gym_client.env_close instance_id.instance_id in
+  Format.printf "closed %s@." instance_id.instance_id
+
+let () =
+  Format.printf "-------------------------------@.";
+  Format.printf "Test env_list_all@.";
+  let envs = Gym_client.env_list_all () in
+  List.iter
+    (fun (instance_id, env_id) ->
+       Format.printf "  %s: %s@." instance_id env_id)
+    envs
