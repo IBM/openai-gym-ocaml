@@ -1,18 +1,17 @@
-# OCaml binding to gym-http-api
+# OCaml binding to openai-gym
 
-gym-http is a binding to the [gym-http-api](https://github.com/openai/gym-http-api) library which is itself a REST API to the [gym](https://github.com/openai/gym) open-source library.
+openai-gym is an OCaml client for the [gym-http-api](https://github.com/openai/gym-http-api) REST API which is a binding for [openai-gym](https://github.com/openai/gym) open-source library.
 
 The documentation is available in the directory [docs](./docs).
 
 # Install
 
-<!-- ## Quick install with Opam -->
+## Quick install with Opam
 
-<!-- You can install gym-http with the following command: -->
-<!-- ``` -->
-<!-- opam install gym-http -->
-<!-- ``` -->
-
+You can install openai-gym with the following command:
+```
+opam install openai-gym
+```
 
 
 ## Install from source with Opam
@@ -21,18 +20,18 @@ Opam can also be used to compile and install from the source
 directory. For that you first need to pin the source directory.
 So, from this directory, do:
 ```
-opam pin add gym-http .
+opam pin add openai-gym .
 ```
 
 Then you can install using the command:
 ```
-opam install gym-http
+opam install openai-gym
 ```
 
 If the source files are modified, the packages must be reinstalled
 with the command:
 ```
-opam reinstall gym-http
+opam reinstall openai-gym
 ```
 
 
@@ -56,6 +55,17 @@ To compile, do:
 ```
 make
 ```
+
+To test, do:
+```
+make test
+```
+
+To generate the documentation, do:
+```
+make doc
+```
+
 
 
 # Contribute

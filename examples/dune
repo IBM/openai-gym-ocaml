@@ -16,7 +16,7 @@
 
 (executables
  (names test01)
- (libraries gym-http)
+ (libraries openai-gym)
  (link_flags -linkall))
 
 (alias

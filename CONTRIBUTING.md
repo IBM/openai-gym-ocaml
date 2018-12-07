@@ -1,6 +1,6 @@
 # Contributing
 
-We welcome contributions to the gym-http project!
+We welcome contributions to the opanai-gym-ocaml project!
 
   * Ensure that your effort is aligned with the project's roadmap by
     talking to the maintainers, especially if you are going to spend a

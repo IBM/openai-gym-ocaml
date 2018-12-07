@@ -44,11 +44,11 @@ uninstall:
 
 clean:
 	rm -rf _build \
-		gym-http.install
+		openai-gym.install
 
 cleanall: clean
 	rm -f *~ */*~ \
-		gym-http/.merlin
+		openai-gym/.merlin
 
 realcleanall: cleanall
 

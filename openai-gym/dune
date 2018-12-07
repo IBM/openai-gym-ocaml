@@ -15,9 +15,9 @@
 ;; limitations under the License.
 
 (library
- (name        gym_http)
- (public_name gym-http)
- (synopsis "Gym API Library")
+ (name        openai_gym)
+ (public_name openai-gym)
+ (synopsis "OpenAI Gym API client")
  (libraries atdgen cohttp-lwt-unix))
 
 (rule
