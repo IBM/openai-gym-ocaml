@@ -61,5 +61,5 @@ make
 # Contribute
 
 Contributions and bug reports are welcome!
-To contribute please follows the instructions given in the file (CONTRIBUTING.md)[./CONTRIBUTING.md].
+To contribute please follows the instructions given in the file [CONTRIBUTING.md](./CONTRIBUTING.md).
 
