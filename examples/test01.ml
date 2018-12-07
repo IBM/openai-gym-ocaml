@@ -22,25 +22,25 @@ let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_reset@.";
   let obs = Gym_client.env_reset instance_id in
-  Format.printf "observation = %s@." (string_of_json obs)
+  Format.printf "observation = %s@." (string_of_observation obs)
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_step@.";
-  let resp = Gym_client.env_step instance_id 0 false in
+  let resp = Gym_client.env_step instance_id { action = 0; } false in
   Format.printf "resp = %s@." (string_of_step_response resp)
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_action_space_info@.";
   let resp = Gym_client.env_action_space_info instance_id in
-  Format.printf "resp = %s@." (string_of_json resp)
+  Format.printf "resp = %s@." (string_of_action_space_info resp)
 
 let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_action_space_sample@.";
   let resp = Gym_client.env_action_space_sample instance_id in
-  Format.printf "action = %s@." (string_of_json resp)
+  Format.printf "action = %s@." (string_of_action resp)
 
 let () =
   Format.printf "-------------------------------@.";
@@ -52,7 +52,7 @@ let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_observation_space_info@.";
   let resp = Gym_client.env_observation_space_info instance_id in
-  Format.printf "obs_space = %s@." (string_of_json resp)
+  Format.printf "obs_space = %s@." (string_of_observation_space_info resp)
 
 let () =
   Format.printf "-------------------------------@.";

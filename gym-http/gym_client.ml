@@ -51,24 +51,24 @@ end
 (** [env_reset instance_id] resets the state of the environment and
     return an initial observation.
 *)
-let env_reset : instance_id -> json = begin
+let env_reset : instance_id -> observation = begin
   fun instance_id ->
     let method_ = "/v1/envs/"^instance_id.instance_id^"/reset/" in
     let req = "" in
     let rsp = Rest.post !base_url method_ req in
-    (observation_of_string rsp).observation
+    observation_of_string rsp
 end
 
 (** [env_step instance_id action render] steps though an environment
     using an action. If [render] is true, a graphical feedback if
     display by the server.
 *)
-let env_step : instance_id -> int -> bool -> step_response = begin
+let env_step : instance_id -> action -> bool -> step_response = begin
   fun instance_id action render ->
     let method_ = "/v1/envs/"^instance_id.instance_id^"/step/" in
     let req =
       string_of_step_param { step_render = render;
-                             step_action = `Int action; }
+                             step_action = `Int action.action; }
     in
     let rsp = Rest.post !base_url method_ req in
     step_response_of_string rsp
@@ -77,23 +77,23 @@ end
 (** [env_action_space_info instance_id] gets information (name and
     dimensions/bounds) of the env's action_space.
 *)
-let env_action_space_info : instance_id -> json = begin
+let env_action_space_info : instance_id -> action_space_info = begin
   fun instance_id  ->
     let method_ = "/v1/envs/"^instance_id.instance_id^"/action_space/" in
     let params = "" in
     let rsp = Rest.get !base_url method_ params in
-    (action_space_response_of_string rsp).action_space_info
+    action_space_info_of_string rsp
 end
 
 (** [env_action_space_sample instance_id] samples randomly from the
     env's action_space.
 *)
-let env_action_space_sample : instance_id -> json = begin
+let env_action_space_sample : instance_id -> action = begin
   fun instance_id ->
     let method_ = "/v1/envs/"^instance_id.instance_id^"/action_space/sample" in
     let params = "" in
     let rsp = Rest.get !base_url method_ params in
-    (action_space_sample_response_of_string rsp).action_space_sample_action
+    action_of_string rsp
 end
 
 (** [env_action_space_contains instance_id x] checks to see if the
@@ -112,12 +112,12 @@ end
 (** [env_observation_space_info instance_id] gets information (name
     and dimensions/bounds) of the env's observation_space.
 *)
-let env_observation_space_info : instance_id -> json = begin
+let env_observation_space_info : instance_id -> observation_space_info = begin
   fun instance_id ->
     let method_ = "/v1/envs/"^instance_id.instance_id^"/observation_space/" in
     let params = "" in
     let rsp = Rest.get !base_url method_ params in
-    (observation_space_response_of_string rsp).observation_space_info
+    observation_space_info_of_string rsp
 end
 
 (** [env_observation_space_contains instance_id params] assesses that

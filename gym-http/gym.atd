@@ -51,19 +51,19 @@ type step_response = {
   info : json;
 } <ocaml field_prefix="step_">
 
-type action_space_response = {
+type action_space_info = {
   info : json;
 } <ocaml field_prefix="action_space_">
 
-type action_space_sample_response = {
-  action : json;
-} <ocaml field_prefix="action_space_sample_">
+type action = {
+  action : int;
+}
 
 type action_space_contains_response = {
   member : bool;
 } <ocaml field_prefix="action_space_contains_">
 
-type observation_space_response = {
+type observation_space_info = {
   info : json;
 } <ocaml field_prefix="observation_space_">
 
