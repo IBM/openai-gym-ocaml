@@ -38,12 +38,14 @@ end
 (** [env_list_all ()] lists all the environments running on the server
     as a pair [(instance_id, env_id)] (e.g. [[("3c657dbc", "CartPole-v0")]]).
 *)
-let env_list_all : unit -> (string * string) list = begin
+let env_list_all : unit -> (instance_id * string) list = begin
   fun () ->
     let method_ = "/v1/envs/" in
     let params = "" in
     let rsp = Rest.get !base_url method_ params in
-    (all_envs_of_string rsp).all_envs
+    List.map
+      (fun (instance_id, env_id) -> ({instance_id = instance_id}, env_id))
+      (all_envs_of_string rsp).all_envs
 end
 
 (** [env_reset instance_id] resets the state of the environment and
@@ -107,48 +109,76 @@ let env_action_space_contains : instance_id -> int -> bool = begin
     (action_space_contains_response_of_string rsp).action_space_contains_member
 end
 
-let env_observation_space_info instance_id =
-  let method_ = "/v1/envs/"^instance_id.instance_id^"/observation_space/" in
-  let params = "" in
-  let rsp = Rest.get !base_url method_ params in
-  (observation_space_response_of_string rsp).observation_space_info
+(** [env_observation_space_info instance_id] gets information (name
+    and dimensions/bounds) of the env's observation_space.
+*)
+let env_observation_space_info : instance_id -> json = begin
+  fun instance_id ->
+    let method_ = "/v1/envs/"^instance_id.instance_id^"/observation_space/" in
+    let params = "" in
+    let rsp = Rest.get !base_url method_ params in
+    (observation_space_response_of_string rsp).observation_space_info
+end
 
-let env_observation_space_contains instance_id params =
-  let method_ = "/v1/envs/"^instance_id.instance_id^"/observation_space/contains" in
-  let req = string_of_json params in
-  let rsp = Rest.post !base_url method_ req in
-  let rsp = observation_space_contains_response_of_string rsp in
-  rsp.observation_space_contains_member
+(** [env_observation_space_contains instance_id params] assesses that
+    the parameters are members of the env's observation_space.
+*)
+let env_observation_space_contains : instance_id -> json -> bool = begin
+  fun instance_id params ->
+    let method_ = "/v1/envs/"^instance_id.instance_id^"/observation_space/contains" in
+    let req = string_of_json params in
+    let rsp = Rest.post !base_url method_ req in
+    let rsp = observation_space_contains_response_of_string rsp in
+    rsp.observation_space_contains_member
+end
 
-let env_monitor_start instance_id directory force resume =
-  let method_ = "/v1/envs/"^instance_id.instance_id^"/monitor/start/" in
-  let req =
-    string_of_monitor_start_param
-      { monitor_directory = directory;
-        monitor_force = force;
-        monitor_resume = resume;
-        monitor_video_callable = false; }
-  in
-  let _rsp = Rest.post !base_url method_ req in
-  assert (_rsp = "");
-  ()
+(** [env_monitor_start instance_id directory force resume] starts
+    monitoring. [force] clears out existing training data from this
+    directory (by deleting every file prefixed with [openaigym.]).
+    [resume] retains the training data already in this directory,
+    which will be merged with our new data.
+*)
+let env_monitor_start : instance_id -> string -> bool -> bool -> unit = begin
+  fun instance_id directory force resume ->
+    let method_ = "/v1/envs/"^instance_id.instance_id^"/monitor/start/" in
+    let req =
+      string_of_monitor_start_param
+        { monitor_directory = directory;
+          monitor_force = force;
+          monitor_resume = resume;
+          monitor_video_callable = false; }
+    in
+    let _rsp = Rest.post !base_url method_ req in
+    assert (_rsp = "");
+    ()
+end
 
-let env_monitor_close instance_id =
-  let method_ = "/v1/envs/"^instance_id.instance_id^"/monitor/close/" in
-  let req = "" in
-  let _rsp = Rest.post !base_url method_ req in
-  assert (_rsp = "");
-  ()
+(** [env_monitor_close instance_id] flushes all monitor data to disk.
+*)
+let env_monitor_close : instance_id -> unit = begin
+  fun instance_id ->
+    let method_ = "/v1/envs/"^instance_id.instance_id^"/monitor/close/" in
+    let req = "" in
+    let _rsp = Rest.post !base_url method_ req in
+    assert (_rsp = "");
+    ()
+end
 
-let env_close instance_id =
-  let method_ = "/v1/envs/"^instance_id.instance_id^"/close/" in
-  let req = "" in
-  let _rsp = Rest.post !base_url method_ req in
-  assert (_rsp = "");
-  ()
+(** [env_close instance_id] stops the environment. *)
+let env_close : instance_id -> unit = begin
+  fun instance_id ->
+    let method_ = "/v1/envs/"^instance_id.instance_id^"/close/" in
+    let req = "" in
+    let _rsp = Rest.post !base_url method_ req in
+    assert (_rsp = "");
+    ()
+end
 
-let shutdown_server () =
-  let method_ = "/v1/shutdown/" in
-  let req = "" in
-  let rsp = Rest.post !base_url method_ req in
-  rsp
+(** [shutdown_server ()] requests a server shutdown. *)
+let shutdown_server : unit -> string = begin
+  fun () ->
+    let method_ = "/v1/shutdown/" in
+    let req = "" in
+    let rsp = Rest.post !base_url method_ req in
+    rsp
+end

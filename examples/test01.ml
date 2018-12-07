@@ -15,7 +15,7 @@ let () =
   let envs = Gym_client.env_list_all () in
   List.iter
     (fun (instance_id, env_id) ->
-       Format.printf "  %s: %s@." instance_id env_id)
+       Format.printf "  %s: %s@." instance_id.instance_id env_id)
     envs
 
 let () =
@@ -88,7 +88,7 @@ let () =
   let envs = Gym_client.env_list_all () in
   List.iter
     (fun (instance_id, env_id) ->
-       Format.printf "  %s: %s@." instance_id env_id)
+       Format.printf "  %s: %s@." instance_id.instance_id env_id)
     envs
 
 (* let () = *)

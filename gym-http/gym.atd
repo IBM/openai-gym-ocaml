@@ -47,7 +47,7 @@ type step_param = {
 type step_response = {
   observation : json;
   reward : float;
-  done : json;
+  done : bool;
   info : json;
 } <ocaml field_prefix="step_">
 
