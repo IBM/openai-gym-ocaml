@@ -66,7 +66,7 @@ let () =
   Format.printf "-------------------------------@.";
   Format.printf "Test env_monitor_start@.";
   let () =
-    Gym_client.env_monitor_start instance_id "/tmp" true false
+    Gym_client.env_monitor_start instance_id "/tmp/gym-results" true false
   in
   Format.printf "monitor started@."
 
