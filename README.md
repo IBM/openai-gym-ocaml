@@ -1,8 +1,18 @@
 # OCaml binding to openai-gym
 
-openai-gym is an OCaml client for the [gym-http-api](https://github.com/openai/gym-http-api) REST API which is a binding for [openai-gym](https://github.com/openai/gym) open-source library.
+openai-gym is an OCaml client for the
+[gym-http-api](https://github.com/openai/gym-http-api) REST API which
+is a binding for [openai-gym](https://github.com/openai/gym)
+open-source library.
 
-The documentation is available in the directory [docs](./docs).
+To use the openai-gym package, you need to have a
+[gym-http-api](https://github.com/openai/gym-http-api) server runnung:
+```
+python3 gym_http_server.py
+```
+
+The documentation of the openai-gym package is available in the
+directory [docs](./docs).
 
 # Install
 
