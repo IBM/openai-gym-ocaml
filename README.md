@@ -107,15 +107,15 @@ git checkout -b openai-gym-X.XX
 ```
   - Create the new packages from the old ones:
 ```
-cp -R packages/openai-gym/openai-gym.Y.YY packages/openai-gym/openai-gym.X.XX
+mkdir packages/openai-gym/openai-gym.X.XX
 ```
   - Update the `opam` files:
 ```
 cp OPENAI-GYM_OCAML_DIR/openai-gym.opam packages/openai-gym/openai-gym.X.XX/opam
 ```
-  - Update the `url` files
+  - Update the `url`
 ```
-emacs packages/openai-gym/openai-gym.X.XX/url
+emacs packages/openai-gym/openai-gym.X.XX/opam
 ```
   - Commit and push the changes
 ```

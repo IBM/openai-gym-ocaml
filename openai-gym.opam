@@ -1,10 +1,11 @@
-opam-version: "1.2"
+opam-version: "2.0"
 name: "openai-gym"
 version: "0.01"
 maintainer: [
   "Louis Mandel <lmandel@us.ibm.com>"
 ]
 authors: [
+  "Guillaume Baudart"
   "Louis Mandel"
 ]
 homepage: "https://github.com/IBM/openai-gym-ocaml"
@@ -28,3 +29,10 @@ depends: [
 available: [
   ocaml-version >= "4.03.0"
 ]
+
+synopsis: "OCaml binding for openai Gym toolkit."
+
+description: """
+openai-gym is an OCaml binding for [openai-gym](https://github.com/openai/gym)
+open-source library. It is built as a client for the [gym-http-api](https://github.com/openai/gym-http-api) REST API.
+"""
