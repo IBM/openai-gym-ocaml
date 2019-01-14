@@ -7,10 +7,10 @@ maintainer: [
 authors: [
   "Louis Mandel"
 ]
-homepage: "https://github.ibm.com/openai-gym-ocaml/openai-gym"
-bug-reports: "https://github.ibm.com/openai-gym-ocaml/openai-gym/issues"
+homepage: "https://github.com/IBM/openai-gym-ocaml"
+bug-reports: "https://github.com/IBM/openai-gym-ocaml/issues"
 license: "Apache License 2.0"
-dev-repo: "https://github.ibm.com/openai-gym-ocaml/openai-gym.git"
+dev-repo: "https://github.com/IBM/openai-gym-ocaml.git"
 
 build: [
   ["dune" "subst"] {pinned}
