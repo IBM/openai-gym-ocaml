@@ -1,18 +1,14 @@
 # OCaml binding to openai-gym
 
-openai-gym is an OCaml client for the
-[gym-http-api](https://github.com/openai/gym-http-api) REST API which
-is a binding for [openai-gym](https://github.com/openai/gym)
-open-source library.
+openai-gym is an OCaml binding for [openai-gym](https://github.com/openai/gym)
+open-source library. It is built as a client for the [gym-http-api](https://github.com/openai/gym-http-api) REST API.
 
-To use the openai-gym package, you need to have a
-[gym-http-api](https://github.com/openai/gym-http-api) server runnung:
+To use the openai-gym package, you need to have a [gym-http-api](https://github.com/openai/gym-http-api) server runnung:
 ```
 python3 gym_http_server.py
 ```
 
-The documentation of the openai-gym package is available in the
-directory [docs](./docs).
+The documentation of the openai-gym package is available [online](https://ibm.github.io/openai-gym-ocaml/) or in the directory [docs](./docs).
 
 # Install
 
@@ -76,6 +72,57 @@ To generate the documentation, do:
 make doc
 ```
 
+# Make a new release
+
+In order to do a new release, we have to do the following steps.
+
+1. Make sure that the documentation is up to date:
+```
+make webdoc
+```
+
+2. Search and update the version number:
+```
+grep -r -e '\d.\d\d-dev' .
+```
+
+3. Update the `CHANGES.md` file.
+
+4. Create a new release on the github interface:
+   https://github.com/IBM/openai-gym-ocaml/releases
+
+5. Create a new release of the opam packages.
+  - Create or update the fork of https://github.com/ocaml/opam-repository
+```
+git checkout master
+git fetch --all
+git merge --ff-only upstream/master
+git push
+```
+  - Create a new branch
+```
+git checkout -b openai-gym-X.XX
+```
+  - Create the new packages from the old ones:
+```
+cp -R packages/openai-gym/openai-gym.Y.YY packages/openai-gym/openai-gym.X.XX
+```
+  - Update the `opam` files:
+```
+cp OPENAI-GYM_OCAML_DIR/openai-gym.opam packages/openai-gym/openai-gym.X.XX/opam
+```
+  - Update the `url` files
+```
+emacs packages/openai-gym/openai-gym.X.XX/url
+```
+  - Commit and push the changes
+```
+git push origin openai-gym-X.XX
+```
+  - Create a pull request from the github interface:
+	https://github.com/ocaml/opam-repository
+
+6. Once the pull request is accepted update the version number.
 
 
 # Contribute
