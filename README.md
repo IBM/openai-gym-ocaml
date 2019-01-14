@@ -76,22 +76,24 @@ make doc
 
 In order to do a new release, we have to do the following steps.
 
-1. Make sure that the documentation is up to date:
-```
-make webdoc
-```
-
-2. Search and update the version number:
+1. Search and update the version number:
 ```
 grep -r -e '\d.\d\d-dev' .
 ```
 
+2. Make sure that the documentation is up to date:
+```
+make webdoc
+```
+
 3. Update the `CHANGES.md` file.
 
-4. Create a new release on the github interface:
+4. Commit the changes.
+
+5. Create a new release on the github interface:
    https://github.com/IBM/openai-gym-ocaml/releases
 
-5. Create a new release of the opam packages.
+6. Create a new release of the opam packages.
   - Create or update the fork of https://github.com/ocaml/opam-repository
 ```
 git checkout master
@@ -122,7 +124,7 @@ git push origin openai-gym-X.XX
   - Create a pull request from the github interface:
 	https://github.com/ocaml/opam-repository
 
-6. Once the pull request is accepted update the version number.
+7. Once the pull request is accepted update the version number.
 
 
 # Contribute
