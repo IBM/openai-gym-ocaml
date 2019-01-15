@@ -29,7 +29,7 @@ doc:
 	$(DUNE) build @doc
 
 webdoc: doc
-	cp -rf _build/default/_doc/ docs/
+	cp -rf _build/default/_doc/_html/* docs/
 	rm -f docs/index.html
 
 indent:

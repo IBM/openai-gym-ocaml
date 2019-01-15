@@ -2,6 +2,7 @@
 
 openai-gym-ocaml is an OCaml binding for [openai-gym](https://github.com/openai/gym) open-source library. It is built as a client for the [gym-http-api](https://github.com/openai/gym-http-api) REST API.
 
+The documentation of the OCaml package is available at https://ibm.github.io/openai-gym-ocaml/openai-gym.
 
 ## Quick install with Opam
 
@@ -23,15 +24,16 @@ python3 gym_http_server.py
 ## Tutorial
 
 In order to illustrate the use of openai-gym-ocaml, we are going to
-program a random controler for cart-pole environment. It is going to
-use the `openai-gym` package and its type definitions:
+program a controller for [cart-pole
+environment](https://gym.openai.com/envs/CartPole-v1/). It uses the
+`openai-gym` package and its type definitions:
 
 ```ocaml
 open Openai_gym
 open Gym_t
 ```
 
-We create a new environment that our agent is going to interact with.
+We create a new environment that our controller is going to interact with.
 ```ocaml
 let instance_id =
   Gym_client.env_create "CartPole-v1"
@@ -43,7 +45,7 @@ let init =
   Gym_client.env_reset instance_id
 ```
 
-We now create an agent that ignore the observation of the environment
+We now create a controller that ignore the observation of the environment
 and just select a random action:
 ```ocaml
 let random_agent _obs =
@@ -51,8 +53,8 @@ let random_agent _obs =
   Gym_client.env_action_space_sample instance_id
 ```
 
-Now that we have an environment, and an agent, we can create a simulation
-loop that executable the agent in interaction with the environment
+Now that we have an environment, and a controller, we can create a simulation
+loop that executable the controller in interaction with the environment
 until the environment says `done`.
 ```ocaml
 let rec simu obs =

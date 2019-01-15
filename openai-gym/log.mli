@@ -20,7 +20,7 @@
    Logging utilities.
 *)
 
-(** {6 Errors} *)
+(** {3 Errors} *)
 
 exception Error of string * string
 (** Exception raise in case of error. It is associated with the module
@@ -42,7 +42,7 @@ val print_error : string -> string -> unit
     prefixed with the module name [module_name].
 *)
 
-(** {6 Warnings} *)
+(** {3 Warnings} *)
 
 val warning_message : bool ref
 (** Set if we should display warnings. *)
@@ -53,7 +53,7 @@ val warning : string -> string -> unit
 *)
 
 
-(** {6 Debug messages} *)
+(** {3 Debug messages} *)
 
 val debug_message : bool ref
 (** Set if we should display debug. *)

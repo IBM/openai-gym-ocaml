@@ -20,7 +20,7 @@ module Make (Client : Cohttp_lwt.S.Client) = struct
   open Lwt
   open Json_t
 
-  (** {6. Utility functions} *)
+  (** {3 Utility functions} *)
 
   let parameters_of_json (o: json) : string =
     begin match o with
@@ -37,7 +37,7 @@ module Make (Client : Cohttp_lwt.S.Client) = struct
            ": json object expected")
     end
 
-  (** {6. Generic functions} *)
+  (** {3 Generic functions} *)
 
   let post base_url method_ req =
     let uri =
