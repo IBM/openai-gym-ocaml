@@ -15,11 +15,11 @@
 ;; limitations under the License.
 
 (executables
- (names test01)
+ (names tutorial)
  (libraries openai-gym)
  (link_flags -linkall))
 
 (alias
  (name   runtest)
- (deps   (:x test01.exe))
+ (deps   (:x tutorial.exe))
  (action (run %{x})))
