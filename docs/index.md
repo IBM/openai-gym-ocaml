@@ -1,6 +1,6 @@
 # OCaml binding to openai-gym
 
-openai-gym-ocaml is an OCaml binding for [openai-gym](https://github.com/openai/gym) open-source library. It is built as a client for the [gym-http-api](https://github.com/openai/gym-http-api) REST API.
+[openai-gym-ocaml](https://github.com/IBM/openai-gym-ocaml) is an OCaml binding for [openai-gym](https://github.com/openai/gym) open-source library. It is built as a client for the [gym-http-api](https://github.com/openai/gym-http-api) REST API.
 
 The documentation of the OCaml package is available at https://ibm.github.io/openai-gym-ocaml/openai-gym.
 
