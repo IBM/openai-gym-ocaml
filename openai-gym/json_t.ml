@@ -16,13 +16,13 @@
  * limitations under the License.
  *)
 
-type safe = Yojson.Safe.json
-type basic = Yojson.Basic.json
+type safe = Yojson.Safe.t
+type basic = Yojson.Basic.t
 type json = basic
 type lexer_state = Yojson.Basic.lexer_state
-type bi_outbuf_t = Bi_outbuf.t
+type bi_outbuf_t = Buffer.t
 
-let write_json = Yojson.Basic.write_json
-let read_json = Yojson.Basic.read_json
+let write_json = Yojson.Basic.write_t
+let read_json = Yojson.Basic.read_t
 let to_string j = Yojson.Basic.to_string j
 
