@@ -18,16 +18,16 @@
 
 (** JSON type definition. *)
 
-type safe = Yojson.Safe.json
+type safe = Yojson.Safe.t
 
-type basic = Yojson.Basic.json
+type basic = Yojson.Basic.t
 
 type json = basic
 
 (** {3 Serialization/deserialization functions for atdgen} *)
 
 type lexer_state = Yojson.Basic.lexer_state
-type bi_outbuf_t = Bi_outbuf.t
+type bi_outbuf_t = Buffer.t
 
 val write_json : bi_outbuf_t -> json -> unit
 
